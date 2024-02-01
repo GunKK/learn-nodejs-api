@@ -15,6 +15,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 const route = require('./routes');
 route(app);
 
+if (process.env.NODE_ENV !== 'development') {
+    app.use(morgan.dev);
+}
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, async () => {

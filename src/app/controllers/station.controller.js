@@ -33,23 +33,16 @@ class StationController {
     }
     async show(req, res) {
         try {
-            const id = req.params.id;
+            const { id } = req.params;
             const station = await Station.findOne({
                 where: {
                     id,
                 }
             });
-            if (station) {
-                res.status(200).json({
-                    'message': 'success', 
-                    station
-                })
-            } else {
-                res.status(404).json({
-                    'message': 'not found', 
-                    station
-                })
-            }
+            res.status(200).json({
+                'message': 'success', 
+                station
+            })
         } catch (error) {
             res.status(500).json({
                 message: `Có lỗi xảy ra! ${error.message}`,
@@ -59,28 +52,21 @@ class StationController {
     }
     async update(req, res) {
         try {
-            const id = req.params.id;
+            const { id } = req.params;
             const station = await Station.findOne({
                 where: {
                     id,
                 }
             });
-            if (station) {
-                const { name, address, province } = req.body;
-                station.name = name;
-                station.address = address;
-                station.province = province;
-                await station.save();
-                res.status(200).json({
-                    'message': 'success', 
-                    station
-                })
-            } else {
-                res.status(404).json({
-                    'message': 'not found', 
-                    station
-                })
-            }
+            const { name, address, province } = req.body;
+            station.name = name;
+            station.address = address;
+            station.province = province;
+            await station.save();
+            res.status(200).json({
+                'message': 'success', 
+                station
+            })
         } catch (error) {
             res.status(500).json({
                 message: `Có lỗi xảy ra! ${error.message}`,
